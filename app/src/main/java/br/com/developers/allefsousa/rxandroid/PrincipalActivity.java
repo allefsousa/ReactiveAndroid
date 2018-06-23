@@ -7,6 +7,7 @@ import android.util.Log;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import io.reactivex.functions.Predicate;
@@ -15,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 public class PrincipalActivity extends AppCompatActivity {
 
     private String TAG = "Allef";
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
         Observable<String> getAnimal = getAnimalsObservable();
         Observer<String> animalsObserver = operacoesObserver();
+
 
         /**
          * O operador filter () filtra os dados aplicando uma instrução condicional.
