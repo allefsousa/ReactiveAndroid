@@ -9,6 +9,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 public class PrincipalActivity extends AppCompatActivity {
@@ -20,12 +21,23 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
+        Observable<String> getAnimal = getAnimalsObservable();
         Observer<String> animalsObserver = operacoesObserver();
 
-        getAnimalsObservable()
+        /**
+         * O operador filter () filtra os dados aplicando uma instrução condicional.
+         * Os dados que atendem à condição serão emitidos e os demais serão ignorados.
+         */
+        getAnimal
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(animalsObserver);
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) throws Exception {
+                        return s.toLowerCase().startsWith("b");
+                    }
+                })
+                .subscribeWith(animalsObserver);
 
     }
 
